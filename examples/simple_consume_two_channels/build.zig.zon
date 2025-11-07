@@ -1,9 +1,9 @@
 .{
-    .name = "simple_consume_two_channels",
+    .name = .simple_consume_two_channels,
     // This is a [Semantic Version](https://semver.org/).
     // In a future version of Zig it will be used for package deduplication.
     .version = "0.0.0",
-
+    .fingerprint = 0x84af46c9a212035b,
     // This field is optional.
     // This is currently advisory only; Zig does not yet do anything
     // with this value.
@@ -16,8 +16,9 @@
     // internet connectivity.
     .dependencies = .{
         .amqp = .{
-            .url = "../../",
-            .hash = "12201e2af5138be09dec4dfdd163cf8ef3c15c7c39e202661b64d71c6271a9d0886e",
+            .path = "../../"
+            // .url = "../../",
+            // .hash = "12201e2af5138be09dec4dfdd163cf8ef3c15c7c39e202661b64d71c6271a9d0886e",
         },
     },
     .paths = .{
@@ -25,7 +26,7 @@
         // better to explicitly list the files and directories instead, to insure that
         // fetching from tarballs, file system paths, and version control all result
         // in the same contents hash.
-        "",
+        "../../",
         // For example...
         //"build.zig",
         //"build.zig.zon",

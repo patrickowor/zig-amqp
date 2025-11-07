@@ -1,15 +1,16 @@
 .{
-    .name = "simple_consumer",
+    .name = .simple_consumer,
     .version = "0.0.0",
-
+    .fingerprint = 0x5a7e55ad78c6c895,
     .dependencies = .{
         .amqp = .{
-            .url = "../../",
-            .hash = "12201e2af5138be09dec4dfdd163cf8ef3c15c7c39e202661b64d71c6271a9d0886e",
+            .path = "../../",
+            // .url ="../../",
+            // .hash = "12201e2af5138be09dec4dfdd163cf8ef3c15c7c39e202661b64d71c6271a9d0886e",
         },
     },
 
     .paths = .{
-        "",
+        "../../",
     },
 }
