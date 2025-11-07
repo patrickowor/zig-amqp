@@ -14,6 +14,11 @@ pub const Connection = struct {
     in_use_channels: u2048, // Hear me out...
     max_channels: u16,
 
+    const Options = struct{
+        username: []const u8 ="guest", 
+        password: []const u8 = "guest"
+    };
+
     pub fn init(rx_memory: []u8, tx_memory: []u8) Connection {
         return Connection{
             .connector = Connector{
@@ -26,7 +31,7 @@ pub const Connection = struct {
         };
     }
 
-    pub fn connect(connection: *Connection, address: net.Address) !void {
+    pub fn connect(connection: *Connection, address: net.Address, options: Options) !void {
         const file = try net.tcpConnectToAddress(address);
         _ = try file.write("AMQP\x00\x00\x09\x01");
 
@@ -74,7 +79,19 @@ pub const Connection = struct {
         // UPDATE: the above TODO is what we now have, but we require extra
         //         buffers, and how do we size them. It would be nice to
         //         avoid allocations.
-        try proto.Connection.startOkAsync(&connection.connector, &client_properties, "PLAIN", "\x00guest\x00guest", "en_US");
+
+        // "\x00guest\x00guest"
+        var response_string: [1024] u8 = undefined;
+        var response_len: usize = 0; // size of 2 \x00
+
+        const response_arr: [4][]const u8 = .{ "\x00", options.username,  "\x00", options.password};
+        
+        for (response_arr) |item| {
+            std.mem.copyForwards(u8, response_string[response_len..response_len+item.len], item[0..]);
+            response_len += item.len;
+        }
+
+        try proto.Connection.startOkAsync(&connection.connector, &client_properties, "PLAIN", response_string[0..response_len], "en_US");
 
         const tune = try proto.Connection.awaitTune(&connection.connector);
         connection.max_channels = tune.channel_max;

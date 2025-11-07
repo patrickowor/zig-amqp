@@ -1,0 +1,16 @@
+.{
+    .name = .simple_auth_conn,
+    .version = "0.0.0",
+    .fingerprint = 0x3949ae725f5231a5,
+    .dependencies = .{
+        .amqp = .{
+            .path = "../../",
+            // .url ="../../",
+            // .hash = "12201e2af5138be09dec4dfdd163cf8ef3c15c7c39e202661b64d71c6271a9d0886e",
+        },
+    },
+
+    .paths = .{
+        "../../",
+    },
+}
