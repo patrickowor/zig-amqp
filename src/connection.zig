@@ -40,8 +40,8 @@ pub const Connection = struct {
 
         var start = try proto.Connection.awaitStart(&connection.connector);
         const remote_host = start.server_properties.lookup([]u8, "cluster_name");
-        std.log.debug("Connected to {any} AMQP server (version {any}.{any})\nmechanisms: {any}\nlocale: {any}\n", .{
-            remote_host,
+        std.log.debug("Connected to {s} AMQP server (version {any}.{any})\nmechanisms: {s}\nlocale: {s}\n", .{
+            remote_host orelse "null",
             start.version_major,
             start.version_minor,
             start.mechanisms,
